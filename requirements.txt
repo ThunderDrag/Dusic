@@ -2,6 +2,6 @@ discord.py
 spotipy
 youtube-search-python
 pytube
-groq
 python-dotenv
 PyNaCl
+openai
