@@ -72,6 +72,7 @@ if __name__ == "__main__":
     log = logging.getLogger("Dusic")
 
     extensions = [
+        "modules.commands.play",
         "modules.commands.music_control",
         "modules.ai",
     ]
@@ -79,6 +80,6 @@ if __name__ == "__main__":
     # Opus needed to play voice
     if not discord.opus.is_loaded():
         log.info("Loading Opus")
-        discord.opus.load_opus()
+        discord.opus.load_opus(config.OPUS_PATH)
 
     main()

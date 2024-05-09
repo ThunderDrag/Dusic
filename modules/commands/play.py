@@ -1,4 +1,5 @@
 import discord
+from discord.ext import commands
 from discord import app_commands
 import logging
 from modules.search import spotify
@@ -12,7 +13,17 @@ logger = logging.getLogger("Dusic")
 
 
 # Play command to play music from URL or name
-class Play:
+class Play(commands.Cog):
+    def __init__(self, bot: commands.Bot) -> None:
+        self.bot = bot
+
+    @app_commands.command(
+        name="play", description="Play Music/Playlist from URL or name"
+    )
+    @app_commands.describe(music_name="The URL or name of the Music/Playlist to play")
+    async def play_command(self, interaction: discord.Interaction, music_name: str):
+        await Play.play(interaction, music_name)
+
     # Add the song to the queue
     async def play(interaction: discord.Interaction, music_name: str):
         await interaction.response.defer()
@@ -118,16 +129,20 @@ class Play:
                 music = Music()
 
     # Play autocomplete to show results
-    async def play_autocomplete(interaction: discord.Interaction, current: str):
-        if current == "":
+
+    @play_command.autocomplete(name="music_name")
+    async def play_autocomplete(
+        self, interaction: discord.Interaction, music_name: str
+    ):
+        if music_name == "":
             return
 
         choices = []
-        results = await spotify.search(q=current, music_type="search")
+        results = await spotify.search(q=music_name, music_type="search")
 
         for track in results["tracks"]["items"]:
             name = track["name"] + " - " + track["artists"][0]["name"]
-            id = track["id"]
+            id = "spotify.com/track/" + track["id"]
             choices.append(app_commands.Choice(name=name, value=id))
 
         return choices
@@ -150,3 +165,7 @@ class Play:
 
         music_info.set_data(type=music_type)
         return music
+
+
+async def setup(bot: commands.Bot):
+    await bot.add_cog(Play(bot))

@@ -38,27 +38,23 @@ class Play_On_Discord:
 
         music.set_data(ffmpeg_process=source)
 
-        while True:
+        while queue[music.interaction.guild_id].currently_playing != None:
             # The three checks are necessary to ensure that the bot stops playing music
             # First check is to see if the bot is playing music
             # Second is to check if the music is paused by user request
             # Third is to check that the music wasn't skipped by skip or clear command because they will set currently playing to none
-            if (
-                voice_client.is_playing() == False
-                and voice_client.is_paused() == False
-                and queue[music.interaction.guild_id].currently_playing != None
-            ):
+            if voice_client.is_playing() == False and voice_client.is_paused() == False:
                 Play_On_Discord.stop_music(music, queue)
                 break
 
             await asyncio.sleep(1)
 
     def stop_music(music: Music, queue: GuildQueue, leave_channel: bool = False):
+        queue.currently_playing = None
+        queue.music.remove(music)
+
         music.voice_client.stop()
         music.ffmpeg_process.cleanup()
 
         if leave_channel:
             music.voice_client.disconnect()
-
-        queue.music.remove(music)
-        queue.currently_playing = None

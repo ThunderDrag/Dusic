@@ -9,22 +9,9 @@ from modules.commands.play import Play
 logger = logging.getLogger("Dusic")
 
 
-class Play(commands.Cog):
+class Play_Command(commands.Cog):
     def __init__(self, bot: commands.Bot) -> None:
         self.bot = bot
-
-    @app_commands.command(
-        name="play", description="Play Music/Playlist from URL or name"
-    )
-    @app_commands.describe(music_name="The URL or name of the Music/Playlist to play")
-    async def play_command(self, interaction: discord.Interaction, music_name: str):
-        await Play.play_command(interaction, music_name)
-
-    @play_command.autocomplete("music_name")
-    async def play_command_autocomplete(
-        self, interaction: discord.Interaction, current: str
-    ):
-        return await Play.play_command_autocomplete(interaction, current)
 
 
 class Resume(commands.Cog):
@@ -35,7 +22,7 @@ class Resume(commands.Cog):
         name="resume", description="Resume the currently playing music"
     )
     async def resume_command(self, interaction: discord.Interaction):
-        await Resume.resume(interaction)
+        await self.resume(interaction)
 
     async def resume(self, interaction: discord.Interaction):
         await interaction.response.defer()
@@ -109,11 +96,12 @@ class Skip(commands.Cog):
         logging.info(f"New skip command from {interaction.user}")
 
         guildID = interaction.guild_id
-        music = queue.queue[guildID].currently_playing
 
         # If the bot is not playing music, send a message
         if not queue.is_playing(guildID):
             await interaction.followup.send("No music is playing")
+
+        music = queue.queue[guildID].currently_playing
 
         Play_On_Discord.stop_music(music, queue.queue[guildID])
 
@@ -134,12 +122,13 @@ class Clear(commands.Cog):
         logging.info(f"New clear command from {interaction.user}")
 
         guildID = interaction.guild_id
-        music = queue.queue[guildID].currently_playing
 
         # If the bot is not playing music, send a message
         if queue.get_queue_length(guildID) == 0:
             await interaction.followup.send("No music in queue")
             return
+
+        music = queue.queue[guildID].currently_playing
 
         if queue.queue[guildID].currently_playing is not None:
             Play_On_Discord.stop_music(music, queue.queue[guildID], True)
@@ -151,7 +140,7 @@ class Clear(commands.Cog):
 
 
 async def setup(bot: commands.Bot):
-    await bot.add_cog(Play(bot))
+    await bot.add_cog(Play_Command(bot))
     await bot.add_cog(Resume(bot))
     await bot.add_cog(Pause(bot))
     await bot.add_cog(Skip(bot))
