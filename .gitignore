@@ -1,2 +1,7 @@
 venv
 .env
+__pycache__
+app.log
+.cache
+modules/helper/config.py
+music/

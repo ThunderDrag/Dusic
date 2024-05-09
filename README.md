@@ -14,7 +14,7 @@ Dusic is a feature-packed, open-source, free, and easy to use Discord music bot 
 
 ## Features
 
-- Play audio from YouTube 🎧
+- Play audio from Spotify 🎧
 - Supports playlists and queues 📋
 - Volume control 🔊
 - Pause, resume, and skip functionality ⏯️
