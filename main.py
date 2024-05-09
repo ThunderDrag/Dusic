@@ -79,6 +79,6 @@ if __name__ == "__main__":
     # Opus needed to play voice
     if not discord.opus.is_loaded():
         log.info("Loading Opus")
-        discord.opus.load_opus(config.OPUS_PATH)
+        discord.opus.load_opus()
 
     main()
