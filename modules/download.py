@@ -61,7 +61,7 @@ def downloader(download_queue: multiprocessing.Queue, results: dict):
         except:
             continue
 
-        logger.info(f"Downloading music from {data["yt_url"]}")
+        logger.info(f"Downloading music from {data['yt_url']}")
 
         youtube = pytube.YouTube(data["yt_url"])
 
