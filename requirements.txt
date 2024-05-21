@@ -1,7 +1,0 @@
-discord.py
-spotipy
-youtube-search-python
-pytube
-python-dotenv
-PyNaCl
-openai
