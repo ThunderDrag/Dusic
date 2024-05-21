@@ -1,0 +1,6 @@
+discord
+python-dotenv
+ytmusicapi
+PyNaCl
+openai
+pytube

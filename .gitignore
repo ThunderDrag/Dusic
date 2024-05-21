@@ -1,0 +1,6 @@
+.env
+music
+.venv
+app.log
+discord.log
+test.py
