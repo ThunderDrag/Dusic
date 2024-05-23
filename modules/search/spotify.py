@@ -9,7 +9,7 @@ log = logging.getLogger("Dusic")
 
 # Setup the environment variables
 # Token variable issued by Spotify every few hours
-TOKEN = ""
+TOKEN = "la"
 
 CLIENT_ID = config.SPOTIFY_CLIENT_ID
 CLIENT_SECRET = config.SPOTIFY_CLIENT_SECRET
@@ -34,7 +34,7 @@ async def search(q: str, music_type: str, limit="20"):
     async with aiohttp.ClientSession() as session:
         async with session.get(url, headers=headers) as resp:
             # If the status is not 200, refresh the token and try again
-            if resp.status == 400:
+            if resp.status == 400 or resp.status == 401:
                 log.error(f"Failed to search for {q} with status {resp.status}")
                 log.info("Refreshing token")
                 await get_token()
