@@ -7,6 +7,10 @@ test.py
 modules/__pycache__
 modules/commands/__pycache__
 modules/helper/__pycache__
+modules/__pycache__/
+modules/commands/__pycache__/
+modules/helper/__pycache__/
+modules/__pycache__/
 modules/__pycache__/ai.cpython-312.pyc
 modules/__pycache__/discord_voice_afk.cpython-312.pyc
 modules/__pycache__/discord_voice.cpython-312.pyc

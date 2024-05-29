@@ -35,6 +35,9 @@ async def play_music(music: Music, queue: GuildQueue):
     source = discord.FFmpegPCMAudio(music.file_path)
 
     # Play the music
+    if(voice_client.is_playing()):
+        voice_client.stop()
+    
     voice_client.play(source, after=create_after_callback(queue))
 
     # Save the voice client and ffmpeg process
@@ -64,6 +67,5 @@ def stop_music(queue: GuildQueue):
     # Stop the music and cleanup the ffmpeg process
     try:
         music.voice_client.stop()
-        music.ffmpeg_process.cleanup()
     except Exception as e:
-        log.error(f"Error stopping music: {e}")
+        pass

@@ -9,7 +9,7 @@ log = logging.getLogger("Dusic")
 
 # Setup the environment variables
 # Token variable issued by Spotify every few hours
-TOKEN = "la"
+TOKEN = ""
 
 CLIENT_ID = config.SPOTIFY_CLIENT_ID
 CLIENT_SECRET = config.SPOTIFY_CLIENT_SECRET
